@@ -61,4 +61,4 @@ class ClothingTypeViewSet(GenericViewSet,
                      UpdateModelMixin,
                      ListModelMixin):
       serializer_class = ClothingType
-      queryset = ClothingTypeSerializer.objects.all()
+      queryset = ClothingType.objects.all()

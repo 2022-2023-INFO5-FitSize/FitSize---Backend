@@ -1,4 +1,4 @@
-from django.conf.urls import include, re_path
+from django.urls import include, re_path
 from rest_framework.routers import DefaultRouter
 
 from polls.models import ClothingType, Company, CompanyModel, Size, User, UserModel
@@ -7,12 +7,12 @@ from .views import ClothingTypeViewSet, CompanyModelViewSet, CompanyViewSet, Siz
 from . import views
 
 router = DefaultRouter()
-router.register(User, UserViewSet, base_name='user')
-router.register(UserModel, UserModelViewSet, base_name='user-model')
-router.register(Company, CompanyViewSet, base_name='company')
-router.register(CompanyModel, CompanyModelViewSet, base_name='company-model')
-router.register(Size, SizeViewSet, base_name='size')
-router.register(ClothingType, ClothingTypeViewSet, base_name='clothing-type')
+router.register(r'user', UserViewSet)
+router.register(r'user-model', UserModelViewSet)
+router.register(r'company', CompanyViewSet)
+router.register(r'company-model', CompanyModelViewSet)
+router.register(r'size', SizeViewSet)
+router.register(r'clothing-type', ClothingTypeViewSet)
 
 
 urlpatterns = [
