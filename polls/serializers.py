@@ -1,41 +1,57 @@
 # serializers.py
-from rest_framework.fields import UUIDField
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 
 from .models import ClothingType, Company, CompanyModel, Size, User, UserModel
+from .models import User
 
 class UserSerializer(ModelSerializer):
     id = serializers.PrimaryKeyRelatedField(required=True,
                                             allow_null=False,
-                                            queryset=User.objects.all(),
-                                            # This will properly serialize uuid.UUID to str:
-                                            pk_field=UUIDField(format='hex_verbose'))
+                                            queryset=User.objects.all())
     class Meta:
         model = User
         fields = ('id', 'login', 'password')
 
 class UserModelSerializer(ModelSerializer):
+    id = serializers.PrimaryKeyRelatedField(required=True,
+                                            allow_null=False,
+                                            queryset=User.objects.all())
+    user = UserSerializer(read_only=True)
     class Meta:
         model = UserModel
         fields = ('id', 'name', 'dimensions', 'user', 'clothingtype')
 
 class CompanySerializer(ModelSerializer):
+    id = serializers.PrimaryKeyRelatedField(required=True,
+                                            allow_null=False,
+                                            queryset=User.objects.all())
     class Meta:
         model = Company
         fields = ('id', 'name', 'adress')
-
-class CompanyModelSerializer(ModelSerializer):
-    class Meta:
-        model = CompanyModel
-        fields = ('id', 'color', 'dimensions', 'company', 'size', 'clothingtype')
-
+    
 class SizeSerializer(ModelSerializer):
+    id = serializers.PrimaryKeyRelatedField(required=True,
+                                            allow_null=False,
+                                            queryset=User.objects.all())
     class Meta:
         model = Size
         fields = ('id', 'label', 'origin')
 
+class CompanyModelSerializer(ModelSerializer):
+    id = serializers.PrimaryKeyRelatedField(required=True,
+                                            allow_null=False,
+                                            queryset=User.objects.all())
+    size = SizeSerializer(read_only=True)
+    company = CompanySerializer(read_only=True)
+    class Meta:
+        model = CompanyModel
+        fields = ('id', 'color', 'dimensions', 'company', 'size', 'clothingtype')
+
 class ClothingTypeSerializer(ModelSerializer):
+    id = serializers.PrimaryKeyRelatedField(required=True,
+                                            allow_null=False,
+                                            queryset=User.objects.all())
     class Meta:
         model = ClothingType
         fields = ('id', 'label', 'points')

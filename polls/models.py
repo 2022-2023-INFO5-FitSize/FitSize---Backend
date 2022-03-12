@@ -30,7 +30,6 @@ class UserModel(models.Model):
     def __str__(self):
         return "USERMODEL : name : " + self.name + " dimensions : " + self.dimensions + " user with login : " + self.user.login + " clothing type with label : " + self.clothingtype.label 
 
-
 class Company(models.Model):
     id = models.UUIDField(
         primary_key=True,

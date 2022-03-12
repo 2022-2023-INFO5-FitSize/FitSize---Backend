@@ -13,7 +13,7 @@ class UserFactory(factory.Factory):
 class ClothingTypeFactory(factory.Factory):
     id = uuid.uuid4()
     label = "XS"
-    points = models.CharField(max_length=200, blank=True)
+    points = "200 10 100"
     class Meta:
         model = ClothingType
 
