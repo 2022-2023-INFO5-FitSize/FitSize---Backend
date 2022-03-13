@@ -48,7 +48,7 @@ class CompanyModel(models.Model):
         default=uuid.uuid4,
         editable=False)
     color = models.CharField(max_length=100, blank=True)
-    dimensions = models.CharField(max_length=100, blank=True)
+    dimensions = models.CharField(max_length=1000, blank=True)
     company = models.ForeignKey(
         'Company', on_delete=models.CASCADE, blank=True, null=True)
     size = models.ForeignKey(
