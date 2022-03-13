@@ -4,7 +4,6 @@ from polls.models import ClothingType, Company, User, UserModel, CompanyModel, S
 from django.db import models
 
 class UserFactory(factory.Factory):
-    id =  uuid.uuid4()
     login = factory.Faker('name')
     password = factory.Faker('password')
     class Meta:

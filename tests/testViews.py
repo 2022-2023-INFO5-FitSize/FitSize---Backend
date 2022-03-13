@@ -5,18 +5,19 @@ from rest_framework import status
 
 from polls.models import User
 from tests.models import UserFactory
+from rest_framework.test import APIClient
 
 class UserViewSetTestCase(TestCase) :
     def setUp(self):
-        self.user = UserFactory(login='testuser',password='testpassword')
-        self.user.save()
-        self.client.login(login=self.user.login, password=self.user.password)
+        # self.user = UserFactory(login='testuser',password='testpassword')
+        # self.user.save()
+        # self.client.login(login=self.user.login, password=self.user.password)
         self.list_url = reverse('user-list')
 
     def testPost(self):
           """POST to create a User."""
+          self.client = APIClient()
           data_user = {
-              'id': uuid.uuid4(),
               'login': 'New name',
               'password': 'New password',
           }

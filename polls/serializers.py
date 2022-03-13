@@ -1,17 +1,19 @@
 # serializers.py
+import uuid
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 
-from .models import ClothingType, Company, CompanyModel, Size, User, UserModel
-from .models import User
+from polls.models import ClothingType, Company, CompanyModel, Size, User, UserModel
 
 class UserSerializer(ModelSerializer):
-    id = serializers.PrimaryKeyRelatedField(required=True,
-                                            allow_null=False,
-                                            queryset=User.objects.all())
     class Meta:
         model = User
-        fields = ('id', 'login', 'password')
+        fields = ('id','login', 'password')
+
+    # def create(self, validated_data):
+    #     user = User.objects.create(**validated_data)
+    #     print(user.id)
+    #     return user
 
 class ClothingTypeSerializer(ModelSerializer):
     id = serializers.PrimaryKeyRelatedField(required=True,
