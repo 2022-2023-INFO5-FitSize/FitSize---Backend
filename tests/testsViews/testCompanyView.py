@@ -11,9 +11,6 @@ from rest_framework.test import APIClient
 class CompanyViewSetTestCase(TestCase):
     def setUp(self):
         self.client = APIClient()
-        # self.Company = CompanyFactory(login='testCompany',password='testadress')
-        # self.Company.save()
-        # self.client.login(login=self.Company.login, password=self.Company.password)
         self.list_url = reverse('company-list')
 
 
@@ -47,7 +44,7 @@ class CompanyViewSetTestCase(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         company_data = Company.objects.all().first()
         for field_name in ['id', 'name', 'adress']: 
-            self.assertEqual(getattr(Company, field_name), getattr(company_data, field_name))
+            self.assertEqual(getattr(company, field_name), getattr(company_data, field_name))
         
     def testPost(self):
         """POST to create a Company."""

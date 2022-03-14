@@ -8,24 +8,11 @@ from rest_framework.test import APIClient
 
 #---------------------------------------------USER VIEW TESTS-----------------------------------------------------#
 
+
 class UserViewSetTestCase(TestCase):
     def setUp(self):
         self.client = APIClient()
-        # self.user = UserFactory(login='testuser',password='testpassword')
-        # self.user.save()
-        # self.client.login(login=self.user.login, password=self.user.password)
         self.list_url = reverse('user-list')
-
-    def testEndpoints(self):
-        print('\n')
-        print(reverse('clothingtype-list'))
-        print(reverse('usermodel-list'))
-        print(reverse('company-list'))
-        print(reverse('companymodel-list'))
-        print(reverse('size-list'))
-        print(reverse('user-list'))
-
-
 
     def testGetAll(self):
         """GET to get all Users."""
@@ -42,10 +29,13 @@ class UserViewSetTestCase(TestCase):
         user1_data = all_users[0]
         user2_data = all_users[1]
         user3_data = all_users[2]
-        for field_name in ['id', 'login', 'password']: 
-            self.assertEqual(getattr(user1, field_name), getattr(user1_data, field_name))
-            self.assertEqual(getattr(user2, field_name), getattr(user2_data, field_name))
-            self.assertEqual(getattr(user3, field_name), getattr(user3_data, field_name))
+        for field_name in ['id', 'login', 'password']:
+            self.assertEqual(getattr(user1, field_name),
+                             getattr(user1_data, field_name))
+            self.assertEqual(getattr(user2, field_name),
+                             getattr(user2_data, field_name))
+            self.assertEqual(getattr(user3, field_name),
+                             getattr(user3_data, field_name))
 
     def testGetById(self):
         """GET to get User by Id."""
@@ -55,9 +45,10 @@ class UserViewSetTestCase(TestCase):
         response = self.client.get(self.list_url + str(user.id) + '/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         user_data = User.objects.all().first()
-        for field_name in ['id', 'login', 'password']: 
-            self.assertEqual(getattr(user, field_name), getattr(user_data, field_name))
-        
+        for field_name in ['id', 'login', 'password']:
+            self.assertEqual(getattr(user, field_name),
+                             getattr(user_data, field_name))
+
     def testPost(self):
         """POST to create a User."""
         data_user = {

@@ -16,7 +16,7 @@ class UserSerializer(TestCase):
             )
 
 
-class UserModel(TestCase):
+class UserModelSerializer(TestCase):
     def test_model_fields(self):
         usermodel = models.UserModelFactory()
         serializer = serializers.UserModelSerializer(usermodel)
