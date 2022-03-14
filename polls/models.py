@@ -1,6 +1,4 @@
-import uuid
 from django.db import models
-
 
 
 class User(models.Model):
@@ -12,10 +10,6 @@ class User(models.Model):
 
 
 class UserModel(models.Model):
-    id = models.UUIDField(
-        primary_key=True,
-        default=uuid.uuid4,
-        editable=False)
     name = models.CharField(max_length=100, blank=True)
     dimensions = models.CharField(max_length=100, blank=True)
     user = models.ForeignKey(
@@ -24,13 +18,10 @@ class UserModel(models.Model):
         'ClothingType', on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
-        return "USERMODEL : name : " + self.name + " dimensions : " + self.dimensions + " user with login : " + self.user.login + " clothing type with label : " + self.clothingtype.label 
+        return "USERMODEL : name : " + self.name + " dimensions : " + self.dimensions + " user with login : " + self.user.login + " clothing type with label : " + self.clothingtype.label
+
 
 class Company(models.Model):
-    id = models.UUIDField(
-        primary_key=True,
-        default=uuid.uuid4,
-        editable=False)
     name = models.CharField(max_length=100, blank=True)
     adress = models.CharField(max_length=200, blank=True)
 
@@ -39,10 +30,6 @@ class Company(models.Model):
 
 
 class CompanyModel(models.Model):
-    id = models.UUIDField(
-        primary_key=True,
-        default=uuid.uuid4,
-        editable=False)
     color = models.CharField(max_length=100, blank=True)
     dimensions = models.CharField(max_length=1000, blank=True)
     company = models.ForeignKey(
@@ -57,10 +44,6 @@ class CompanyModel(models.Model):
 
 
 class Size(models.Model):
-    id = models.UUIDField(
-        primary_key=True,
-        default=uuid.uuid4,
-        editable=False)
     label = models.CharField(max_length=100, blank=True)
     origin = models.CharField(max_length=100, blank=True)
 
@@ -69,10 +52,6 @@ class Size(models.Model):
 
 
 class ClothingType(models.Model):
-    id = models.UUIDField(
-        primary_key=True,
-        default=uuid.uuid4,
-        editable=False)
     label = models.CharField(max_length=100, blank=True)
     points = models.CharField(max_length=200, blank=True)
 

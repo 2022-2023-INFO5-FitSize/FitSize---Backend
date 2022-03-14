@@ -1,21 +1,20 @@
-# import uuid
 from django.test import TestCase
 from polls import serializers
-
 from tests import models
+
 
 class UserSerializer(TestCase):
     def test_model_fields(self):
         user = models.UserFactory()
         serializer = serializers.UserSerializer(user)
         for field_name in [
-            'id','login', 'password'
+            'id', 'login', 'password'
         ]:
             self.assertEqual(
                 serializer.data[field_name],
                 getattr(user, field_name)
             )
-        print("\nUser Serializer Test : DONE")
+
 
 class UserModel(TestCase):
     def test_model_fields(self):
@@ -26,19 +25,19 @@ class UserModel(TestCase):
                 serializer.data[field_name],
                 getattr(usermodel, field_name)
             )
-        #Equivalence with user field
-        for field_name in ['id', 'login', 'password']: 
+        # Equivalence with user field
+        for field_name in ['id', 'login', 'password']:
             self.assertEqual(
                 serializer.data['user'][field_name],
                 getattr(usermodel.user, field_name)
             )
-        #Equivalence between clothingtype field
-        for field_name in ['id', 'label', 'points']: 
+        # Equivalence between clothingtype field
+        for field_name in ['id', 'label', 'points']:
             self.assertEqual(
                 serializer.data['clothingtype'][field_name],
                 getattr(usermodel.clothingtype, field_name)
             )
-        print("\nUserModel Serializer Test : DONE")
+
 
 class CompanySerializer(TestCase):
     def test_model_fields(self):
@@ -51,7 +50,7 @@ class CompanySerializer(TestCase):
                 serializer.data[field_name],
                 getattr(company, field_name)
             )
-        print("\nCompany Serializer Test : DONE")
+
 
 class CompanyModelSerializer(TestCase):
     def test_model_fields(self):
@@ -62,25 +61,25 @@ class CompanyModelSerializer(TestCase):
                 serializer.data[field_name],
                 getattr(companymodel, field_name)
             )
-        #Equivalence between company field
-        for field_name in ['id', 'name', 'adress']: 
+        # Equivalence between company field
+        for field_name in ['id', 'name', 'adress']:
             self.assertEqual(
                 serializer.data['company'][field_name],
                 getattr(companymodel.company, field_name)
             )
-        #Equivalence between size field
-        for field_name in ['id', 'label', 'origin']: 
+        # Equivalence between size field
+        for field_name in ['id', 'label', 'origin']:
             self.assertEqual(
                 serializer.data['size'][field_name],
                 getattr(companymodel.size, field_name)
             )
-        #Equivalence between clothingtype field
-        for field_name in ['id', 'label', 'points']: 
+        # Equivalence between clothingtype field
+        for field_name in ['id', 'label', 'points']:
             self.assertEqual(
                 serializer.data['clothingtype'][field_name],
                 getattr(companymodel.clothingtype, field_name)
             )
-        print("\nCompanyModel Serializer Test : DONE")
+
 
 class SizeSerializer(TestCase):
     def test_model_fields(self):
@@ -93,7 +92,7 @@ class SizeSerializer(TestCase):
                 serializer.data[field_name],
                 getattr(size, field_name)
             )
-        print("\nSize Serializer Test : DONE")
+
 
 class ClothingTypeSerializer(TestCase):
     def test_model_fields(self):
@@ -106,4 +105,3 @@ class ClothingTypeSerializer(TestCase):
                 serializer.data[field_name],
                 getattr(clothingtype, field_name)
             )
-        print("\nClothingType Serializer Test : DONE")
