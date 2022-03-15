@@ -1,0 +1,142 @@
+[
+    {
+        "model": "polls.user",
+        "pk": 1,
+        "fields": {
+            "login": "Alfred",
+            "password": "MonChatXXX"
+        }
+    },
+    {
+        "model": "polls.user",
+        "pk": 2,
+        "fields": {
+            "login": "Camille",
+            "password": "xdFGGG"
+        }
+    },
+    {
+        "model": "polls.user",
+        "pk": 3,
+        "fields": {
+            "login": "Julie",
+            "password": "dddfSSGTTs3"
+        }
+    },
+    {
+        "model": "polls.usermodel",
+        "pk": 1,
+        "fields": {
+            "name": "TShirt Rouge",
+            "dimensions": "200 0 1 0 1",
+            "user": 3,
+            "clothingtype": 1
+        }
+    },
+    {
+        "model": "polls.usermodel",
+        "pk": 2,
+        "fields": {
+            "name": "Pantalon Noir",
+            "dimensions": "200 0.01 1 0 1",
+            "user": 2,
+            "clothingtype": 2
+        }
+    },
+    {
+        "model": "polls.usermodel",
+        "pk": 3,
+        "fields": {
+            "name": "Robe Blanche",
+            "dimensions": "80 55 5",
+            "user": 1,
+            "clothingtype": 3
+        }
+    },
+    {
+        "model": "polls.company",
+        "pk": 1,
+        "fields": {
+            "name": "Kiabi",
+            "adress": "7 Avenue de Paris"
+        }
+    },
+    {
+        "model": "polls.company",
+        "pk": 2,
+        "fields": {
+            "name": "Pull & Bear",
+            "adress": "35 Rue des Ours"
+        }
+    },
+    {
+        "model": "polls.company",
+        "pk": 3,
+        "fields": {
+            "name": "Addidas",
+            "adress": "22 Boulevard du Parcours Sportif"
+        }
+    },
+    {
+        "model": "polls.companymodel",
+        "pk": 1,
+        "fields": {
+            "color": "Bleu",
+            "dimensions": "200 0 0 0 10",
+            "company": 3,
+            "size": 1,
+            "clothingtype": 3
+        }
+    },
+    {
+        "model": "polls.companymodel",
+        "pk": 2,
+        "fields": {
+            "color": "Orange",
+            "dimensions": "8 0 0 40 10",
+            "company": 2,
+            "size": 2,
+            "clothingtype": 1
+        }
+    },
+    {
+        "model": "polls.size",
+        "pk": 1,
+        "fields": {
+            "label": "L",
+            "origin": "Europe"
+        }
+    },
+    {
+        "model": "polls.size",
+        "pk": 2,
+        "fields": {
+            "label": "M",
+            "origin": "Asie"
+        }
+    },
+    {
+        "model": "polls.clothingtype",
+        "pk": 1,
+        "fields": {
+            "label": "TShirt",
+            "points": "1 2 6 7"
+        }
+    },
+    {
+        "model": "polls.clothingtype",
+        "pk": 2,
+        "fields": {
+            "label": "Pantalon",
+            "points": "1 2 6 7"
+        }
+    },
+    {
+        "model": "polls.clothingtype",
+        "pk": 3,
+        "fields": {
+            "label": "Robe",
+            "points": "1 2 6 7"
+        }
+    }
+]
