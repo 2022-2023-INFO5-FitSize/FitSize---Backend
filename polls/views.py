@@ -23,25 +23,27 @@ class UserModelViewSet(ModelViewSet):
             array = request.data['dimensions']
             array = array.split('KP')
             if len(array) != 2:
-                  return Response({"Failure": "Wrong syntax for dimensions field"}, status=status.HTTP_400_BAD_REQUEST)
-            keypoints = array[1].split(',')
+                  return Response({"Failure": "Wrong syntax for dimensions field : Control Object or Dimensions for the User model is missing !"}, status=status.HTTP_400_BAD_REQUEST)
             controlobject = array[0].split(',')
+            if len(controlobject) != 5:
+                  return Response({"Failure": "Wrong syntax for dimensions field : Control Object field is missing some information"}, status=status.HTTP_400_BAD_REQUEST)
+            keypoints = array[1].split(',')
+            if (len(keypoints) <= 4) | (len(keypoints) % 4 != 0):
+                  return Response({"Failure": "Wrong syntax for dimensions field : Dimensions for the User Model field is missing some information"}, status=status.HTTP_400_BAD_REQUEST)
 
             arr_control = [float(i) for i in controlobject]
             arr_keypoints = [float(j) for j in keypoints]
 
-            # scale = controlobject.length / sqrt((controlobject.point1.x - controlobject.point2.x)**2 + (controlobject.point1.y - controlobject.point2.y)**2)
-            # dim1 = scale * sqrt((keypoints.point1.x - keypoints.point2.x)**2 + (keypoints.point1.y - keypoints.point2.y)**2)
-            # dim2 = scale * sqrt((keypoints.point3.x - keypoints.point4.x)**2 + (keypoints.point3.y - keypoints.point4.y)**2)
-            # dim3 = scale * sqrt((keypoints.point5.x - keypoints.point6.x)**2 + (keypoints.point5.y - keypoints.point6.y)**2)
-
-            scale = float(len(arr_control)) / sqrt((arr_control[0] - arr_control[2])**2 + (arr_control[1] - arr_control[3])**2)
-            dim1 = scale * sqrt((arr_keypoints[0] - arr_keypoints[2])**2 + (arr_keypoints[1] - arr_keypoints[3])**2)
-            dim2 = scale * sqrt((arr_keypoints[4] - arr_keypoints[6])**2 + (arr_keypoints[5] - arr_keypoints[7])**2)
-            dim3 = scale * sqrt((arr_keypoints[8] - arr_keypoints[10])**2 + (arr_keypoints[9] - arr_keypoints[11])**2)
-
-            request.data['dimensions'] = str(dim1) + "," + str(dim2) + "," + str(dim3)
-            #return Response(request.data, status=status.HTTP_201_CREATED)
+            scale = arr_control[4] / sqrt((arr_control[0] - arr_control[2])**2 + (arr_control[1] - arr_control[3])**2)
+            arr_final = []
+            for x in range(0, len(arr_keypoints), 4):
+                  dim = scale * sqrt((arr_keypoints[x] - arr_keypoints[x+2])**2 + (arr_keypoints[x+1] - arr_keypoints[x+3])**2) 
+                  arr_final.append(dim)
+            string = ""
+            for x in range(len(arr_final) - 1):
+                  string = string + str(arr_final[x]) + ","
+            string = string + str(arr_final[len(arr_final) - 1])
+            request.data['dimensions'] = string
             return self.create(request, *args, **kwargs)
 
 class CompanyViewSet(ModelViewSet):
