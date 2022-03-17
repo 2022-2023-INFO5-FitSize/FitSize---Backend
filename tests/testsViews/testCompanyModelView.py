@@ -84,7 +84,7 @@ class CompanyModelViewSetTestCase(TestCase):
             'clothingtype': clothingtype.id,
         }
         self.assertEqual(CompanyModel.objects.count(), 0)
-        response = self.client.post(self.list_url, data=data_companymodel)
+        response = self.client.post(self.list_url, data=data_companymodel, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(CompanyModel.objects.count(), 1)
         companymodel = CompanyModel.objects.all().first()

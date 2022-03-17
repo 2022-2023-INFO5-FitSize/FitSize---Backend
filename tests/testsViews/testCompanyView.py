@@ -17,9 +17,9 @@ class CompanyViewSetTestCase(TestCase):
 
     def testGetAll(self):
         """GET to get all Companys."""
-        company1 = CompanyFactory(name='testcompany1', adress='testadress1')
-        company2 = CompanyFactory(name='testcompany2', adress='testadress2')
-        company3 = CompanyFactory(name='testcompany3', adress='testadress3')
+        company1 = CompanyFactory()
+        company2 = CompanyFactory()
+        company3 = CompanyFactory()
         company1.save()
         company2.save()
         company3.save()
@@ -37,7 +37,7 @@ class CompanyViewSetTestCase(TestCase):
 
     def testGetById(self):
         """GET to get Company by Id."""
-        company = CompanyFactory(name='testcompany', adress='testadress')
+        company = CompanyFactory()
         company.save()
         self.assertEqual(Company.objects.count(), 1)
         response = self.client.get(self.list_url + str(company.id) + '/')
@@ -53,7 +53,7 @@ class CompanyViewSetTestCase(TestCase):
             'adress': 'New adress',
         }
         self.assertEqual(Company.objects.count(), 0)
-        response = self.client.post(self.list_url, data=data_company)
+        response = self.client.post(self.list_url, data=data_company, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(Company.objects.count(), 1)
         company = Company.objects.all().first()
@@ -62,7 +62,7 @@ class CompanyViewSetTestCase(TestCase):
 
     def testDelete(self):
         """DELETE to destroy a Company."""
-        company = CompanyFactory(name='testcompany', adress='testadress')
+        company = CompanyFactory()
         company.save()
         self.assertEqual(Company.objects.count(), 1)
         response = self.client.delete(self.list_url + str(company.id) + '/')

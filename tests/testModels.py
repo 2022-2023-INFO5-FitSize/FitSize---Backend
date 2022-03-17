@@ -1,17 +1,27 @@
-import uuid
 from django.test import TestCase
 from tests.models import ClothingTypeFactory, UserFactory, UserModelFactory, CompanyFactory, CompanyModelFactory, SizeFactory
 
 class FooTest(TestCase):
-    def test_instantiation(self):
-        q = UserModelFactory(id = uuid.uuid4())
-        a = UserFactory()
-        v = UserModelFactory(id = uuid.uuid4(), user = a)
-        self.assertEqual(a, v.user)
-        self.assertNotEqual(q.id, v.id)
+    def test_str_user(self):
+        user = UserFactory(login="Alfred")
+        self.assertEqual(str(user), "Alfred")
 
-        # Simples instanciation des modèles pour vérifier l'absence d'erreur à la création
-        w = CompanyModelFactory()
-        x = ClothingTypeFactory()
-        y = CompanyFactory()
-        z = SizeFactory()
+    def test_str_usermodel(self):
+        usermodel = UserModelFactory(name="Alfred")
+        self.assertEqual(str(usermodel), "Alfred")
+
+    def test_str_company(self):
+        company = CompanyFactory(name="Apple")
+        self.assertEqual(str(company), "Apple")
+
+    def test_str_companymodel(self):
+        companymodel = CompanyModelFactory(color="Blue")
+        self.assertEqual(str(companymodel), "Blue")
+
+    def test_str_user(self):
+        size = SizeFactory(label="XS")
+        self.assertEqual(str(size), "XS")
+
+    def test_str_clothingtype(self):
+        clothingtype = ClothingTypeFactory(label="TShirt")
+        self.assertEqual(str(clothingtype), "TShirt")

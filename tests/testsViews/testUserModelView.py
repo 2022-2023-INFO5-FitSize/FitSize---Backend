@@ -77,18 +77,52 @@ class UserModelViewSetTestCase(TestCase):
             'clothingtype': clothingtype.id,
         }
         self.assertEqual(UserModel.objects.count(), 0)
-        response = self.client.post(self.list_url, data=data_usermodel)
+        response = self.client.post(self.list_url, data=data_usermodel, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(UserModel.objects.count(), 1)
         usermodel = UserModel.objects.all().first()
         for field_name in ['name', 'dimensions']:
             self.assertEqual(getattr(usermodel, field_name),
                              data_usermodel[field_name])
-        #Tests for ForeignKey fields
+        # Tests for ForeignKey fields
         self.assertIsInstance(getattr(usermodel, 'user'), User)
         self.assertEqual(getattr(usermodel, 'user').id, data_usermodel['user'])
         self.assertIsInstance(getattr(usermodel, 'clothingtype'), ClothingType)
-        self.assertEqual(getattr(usermodel, 'clothingtype').id, data_usermodel['clothingtype'])
+        self.assertEqual(getattr(usermodel, 'clothingtype').id,
+                         data_usermodel['clothingtype'])
+
+    def testCreateDimensions(self):
+        """POST to create a UserModel."""
+        user = UserFactory()
+        clothingtype = ClothingTypeFactory()
+
+        user.save()
+        clothingtype.save()
+
+        
+
+        data_usermodel = {
+            'name': 'New name',
+            'dimensions': '1.0,0.1,4.0,2.5,4.0KP0.0,0.5,8.0,7.0,6.0,5.5,1.2,7.8,8.8,0.0,9.4,8.0',
+            'user': user.id,
+            'clothingtype': clothingtype.id,
+        }
+
+        self.assertEqual(UserModel.objects.count(), 0)
+        response = self.client.post(
+            self.list_url + 'savedimensions/', data_usermodel, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(UserModel.objects.count(), 1)
+        usermodel = UserModel.objects.all().first()
+        self.assertEqual(getattr(usermodel, 'name'),
+                         data_usermodel['name'])
+        # Tests for ForeignKey fields
+        self.assertIsInstance(getattr(usermodel, 'user'), User)
+        self.assertEqual(getattr(usermodel, 'user').id, data_usermodel['user'])
+        self.assertIsInstance(getattr(usermodel, 'clothingtype'), ClothingType)
+        self.assertEqual(getattr(usermodel, 'clothingtype').id,
+                         data_usermodel['clothingtype'])
+        self.assertEqual(len(getattr(usermodel, 'dimensions').split(',')), 3)
 
     def testDelete(self):
         """DELETE to destroy a UserModel."""

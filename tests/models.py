@@ -22,7 +22,7 @@ class ClothingTypeFactory(factory.Factory):
 
 class UserModelFactory(factory.Factory):
     name = factory.Faker('name')
-    dimensions = "200 10 100"
+    dimensions = "1.0,0.1,4.0,2.5,4.0KP0.0,0.5,8.0,7.0,6.0,5.5,1.2,7.8,8.8,0.0,9.4,8.0"
     user = factory.SubFactory(UserFactory)
     clothingtype = factory.SubFactory(ClothingTypeFactory)
 

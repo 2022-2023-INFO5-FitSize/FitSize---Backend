@@ -17,9 +17,9 @@ class SizeViewSetTestCase(TestCase):
 
     def testGetAll(self):
         """GET to get all Sizes."""
-        size1 = SizeFactory(label='testsize1', origin='testorigin1')
-        size2 = SizeFactory(label='testsize2', origin='testorigin2')
-        size3 = SizeFactory(label='testsize3', origin='testorigin3')
+        size1 = SizeFactory()
+        size2 = SizeFactory()
+        size3 = SizeFactory()
         size1.save()
         size2.save()
         size3.save()
@@ -37,7 +37,7 @@ class SizeViewSetTestCase(TestCase):
 
     def testGetById(self):
         """GET to get Size by Id."""
-        size = SizeFactory(label='testsize', origin='testorigin')
+        size = SizeFactory()
         size.save()
         self.assertEqual(Size.objects.count(), 1)
         response = self.client.get(self.list_url + str(size.id) + '/')
@@ -53,7 +53,7 @@ class SizeViewSetTestCase(TestCase):
             'origin': 'New origin',
         }
         self.assertEqual(Size.objects.count(), 0)
-        response = self.client.post(self.list_url, data=data_size)
+        response = self.client.post(self.list_url, data=data_size, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(Size.objects.count(), 1)
         size = Size.objects.all().first()
@@ -62,7 +62,7 @@ class SizeViewSetTestCase(TestCase):
 
     def testDelete(self):
         """DELETE to destroy a Size."""
-        size = SizeFactory(label='testsize', origin='testorigin')
+        size = SizeFactory()
         size.save()
         self.assertEqual(Size.objects.count(), 1)
         response = self.client.delete(self.list_url + str(size.id) + '/')
