@@ -59,7 +59,7 @@ class ClothingTypeViewSetTestCase(TestCase):
             'points': 'New points',
         }
         self.assertEqual(ClothingType.objects.count(), 0)
-        response = self.client.post(self.list_url, data=data_clothingtype)
+        response = self.client.post(self.list_url, data=data_clothingtype, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(ClothingType.objects.count(), 1)
         clothingtype = ClothingType.objects.all().first()
@@ -70,7 +70,7 @@ class ClothingTypeViewSetTestCase(TestCase):
 
     def testDelete(self):
         """DELETE to destroy a ClothingType."""
-        clothingtype = ClothingTypeFactory(label='testclothingtype', points='testpoints')
+        clothingtype = ClothingTypeFactory()
         clothingtype.save()
         self.assertEqual(ClothingType.objects.count(), 1)
         response = self.client.delete(self.list_url + str(clothingtype.id) + '/')

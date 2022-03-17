@@ -16,8 +16,6 @@ class ClothingTypeSerializer(ModelSerializer):
 
 
 class UserModelSerializer(ModelSerializer):
-    # user = UserSerializer(read_only=True)
-    # clothingtype = ClothingTypeSerializer(read_only=True)
 
     class Meta:
         model = UserModel

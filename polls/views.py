@@ -43,6 +43,7 @@ class UserModelViewSet(ModelViewSet):
             for x in range(len(arr_final) - 1):
                   string = string + str(arr_final[x]) + ","
             string = string + str(arr_final[len(arr_final) - 1])
+            request.query_params._mutable = True
             request.data['dimensions'] = string
             return self.create(request, *args, **kwargs)
 

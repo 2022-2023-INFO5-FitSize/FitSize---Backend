@@ -6,7 +6,7 @@ class User(models.Model):
     password = models.CharField(max_length=200, blank=True)
 
     def __str__(self):
-        return "USER : login : " + self.login + " password : " + self.password
+        return self.login
 
 
 class UserModel(models.Model):
@@ -18,7 +18,7 @@ class UserModel(models.Model):
         'ClothingType', on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
-        return "USERMODEL : name : " + self.name + " dimensions : " + self.dimensions + " user with login : " + self.user.login + " clothing type with label : " + self.clothingtype.label
+        return self.name
 
 
 class Company(models.Model):
@@ -40,7 +40,7 @@ class CompanyModel(models.Model):
         'ClothingType', on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
-        return self.id
+        return self.color
 
 
 class Size(models.Model):

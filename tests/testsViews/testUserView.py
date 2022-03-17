@@ -16,9 +16,9 @@ class UserViewSetTestCase(TestCase):
 
     def testGetAll(self):
         """GET to get all Users."""
-        user1 = UserFactory(login='testuser1', password='testpassword1')
-        user2 = UserFactory(login='testuser2', password='testpassword2')
-        user3 = UserFactory(login='testuser3', password='testpassword3')
+        user1 = UserFactory()
+        user2 = UserFactory()
+        user3 = UserFactory()
         user1.save()
         user2.save()
         user3.save()
@@ -39,7 +39,7 @@ class UserViewSetTestCase(TestCase):
 
     def testGetById(self):
         """GET to get User by Id."""
-        user = UserFactory(login='testuser', password='testpassword')
+        user = UserFactory()
         user.save()
         self.assertEqual(User.objects.count(), 1)
         response = self.client.get(self.list_url + str(user.id) + '/')
@@ -56,7 +56,7 @@ class UserViewSetTestCase(TestCase):
             'password': 'New password',
         }
         self.assertEqual(User.objects.count(), 0)
-        response = self.client.post(self.list_url, data=data_user)
+        response = self.client.post(self.list_url, data=data_user, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(User.objects.count(), 1)
         user = User.objects.all().first()
@@ -65,7 +65,7 @@ class UserViewSetTestCase(TestCase):
 
     def testDelete(self):
         """DELETE to destroy a User."""
-        user = UserFactory(login='testuser', password='testpassword')
+        user = UserFactory()
         user.save()
         self.assertEqual(User.objects.count(), 1)
         response = self.client.delete(self.list_url + str(user.id) + '/')
