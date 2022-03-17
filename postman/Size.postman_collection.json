@@ -1,0 +1,99 @@
+{
+	"info": {
+		"_postman_id": "39d88ec4-cd6a-4521-830c-3ab6fa00a23b",
+		"name": "Size",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Size",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"label\": \"Taille L\",\r\n    \"origin\": \"Europe\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{fitsize}}polls/size/",
+					"host": [
+						"{{fitsize}}polls"
+					],
+					"path": [
+						"size",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Sizes",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{fitsize}}polls/size/",
+					"host": [
+						"{{fitsize}}polls"
+					],
+					"path": [
+						"size",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Size by ID",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{fitsize}}polls/size/1/",
+					"host": [
+						"{{fitsize}}polls"
+					],
+					"path": [
+						"size",
+						"1",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Size By Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{fitsize}}polls/size/2/",
+					"host": [
+						"{{fitsize}}polls"
+					],
+					"path": [
+						"size",
+						"2",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
