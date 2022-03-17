@@ -1,0 +1,127 @@
+{
+	"info": {
+		"_postman_id": "9af2c5dd-cead-4ec3-ad3a-aae1c1a91f7d",
+		"name": "UserModel",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create UserModel",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"TShirt\",\r\n    \"dimensions\": \"200 0 1 0 1\",\r\n    \"user\": 3,\r\n    \"clothingtype\": 3\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{fitsize}}polls/usermodel/",
+					"host": [
+						"{{fitsize}}polls"
+					],
+					"path": [
+						"usermodel",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Dimensions",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"TShirt\",\r\n    \"dimensions\": \"1.0,0.1,4.0,2.5,4.0KP0.0,0.5,8.0,7.0,6.0,5.5,1.2,7.8,8.8,0.0,9.4,8.0\",\r\n    \"user\": 3,\r\n    \"clothingtype\": 3\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{fitsize}}polls/usermodel/savedimensions/",
+					"host": [
+						"{{fitsize}}polls"
+					],
+					"path": [
+						"usermodel",
+						"savedimensions",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All UserModels",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{fitsize}}polls/usermodel/",
+					"host": [
+						"{{fitsize}}polls"
+					],
+					"path": [
+						"usermodel",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Usermodel by ID",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{fitsize}}polls/usermodel/1/",
+					"host": [
+						"{{fitsize}}polls"
+					],
+					"path": [
+						"usermodel",
+						"1",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get UserModel By Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{fitsize}}polls/usermodel/3/",
+					"host": [
+						"{{fitsize}}polls"
+					],
+					"path": [
+						"usermodel",
+						"3",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

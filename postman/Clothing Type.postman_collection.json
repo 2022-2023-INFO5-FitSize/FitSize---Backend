@@ -1,0 +1,99 @@
+{
+	"info": {
+		"_postman_id": "5caecc23-20af-4a2c-bb74-84d92e22ce7c",
+		"name": "Clothing Type",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create ClothingType",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"label\": \"Pull\",\r\n    \"points\": \"1 2 6 7\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{fitsize}}polls/clothingtype/",
+					"host": [
+						"{{fitsize}}polls"
+					],
+					"path": [
+						"clothingtype",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All ClothingTypes",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{fitsize}}polls/clothingtype/",
+					"host": [
+						"{{fitsize}}polls"
+					],
+					"path": [
+						"clothingtype",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete ClothingType by ID",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{fitsize}}polls/clothingtype/4/",
+					"host": [
+						"{{fitsize}}polls"
+					],
+					"path": [
+						"clothingtype",
+						"4",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get ClothingType By Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{fitsize}}polls/clothingtype/1/",
+					"host": [
+						"{{fitsize}}polls"
+					],
+					"path": [
+						"clothingtype",
+						"1",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
