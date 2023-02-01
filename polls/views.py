@@ -1,12 +1,13 @@
-from asyncio.windows_events import NULL
+#from asyncio.windows_events import NULL
 from math import sqrt
 from rest_framework.decorators import action
 from django.http import HttpResponse
 from rest_framework.viewsets import ModelViewSet
-from polls.models import ClothingType, Company, CompanyModel, Size, User, UserModel
-from polls.serializers import ClothingTypeSerializer, CompanyModelSerializer, CompanySerializer, SizeSerializer, UserModelSerializer, UserSerializer
+from polls.models import ClothingType, Company, CompanyModel, Size, User, UserModel, CompanyRepresentative
+from polls.serializers import ClothingTypeSerializer, CompanyModelSerializer, CompanySerializer, SizeSerializer, UserModelSerializer, UserSerializer, CompanyRepresentativeSerializer
 from rest_framework.response import Response
 from rest_framework import status
+
 def index(request):
     return HttpResponse("Hello, world. You're at the polls index.")
 
@@ -64,3 +65,8 @@ class SizeViewSet(ModelViewSet):
 class ClothingTypeViewSet(ModelViewSet):
       serializer_class = ClothingTypeSerializer
       queryset = ClothingType.objects.all()
+      
+
+class CompanyRepresentativeViewSet(ModelViewSet):
+      serializer_class = CompanyRepresentativeSerializer
+      queryset = CompanyRepresentative.objects.all()
