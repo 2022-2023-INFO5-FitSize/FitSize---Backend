@@ -138,5 +138,14 @@
             "label": "Robe",
             "points": "1 2 6 7"
         }
+    },
+    {
+        "model": "polls.companyrepresentative",
+        "pk": 1,
+        "fields": {
+            "login": "Clement",
+            "password": "xinchao",
+            "company": 3
+        }
     }
 ]

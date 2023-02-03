@@ -52,6 +52,26 @@ class CompanySerializer(TestCase):
             )
 
 
+class CompanyRepresentativeSerializer(TestCase):
+    def test_model_fields(self):
+        companyRepresentative = models.CompanyRepresentativeFactory()
+        serializer = serializers.CompanyRepresentativeSerializer(companyRepresentative)
+
+        for field_name in [
+            'id', 'login', 'password'
+        ]:
+            self.assertEqual(
+                serializer.data[field_name],
+                getattr(companyRepresentative, field_name)
+            )
+        
+        # Equivalence between company field
+        for field_name in ['id', 'name', 'adress']:
+            self.assertEqual(
+                serializer.data['company'][field_name],
+                getattr(companyRepresentative.company, field_name)
+            )
+
 class CompanyModelSerializer(TestCase):
     def test_model_fields(self):
         companymodel = models.CompanyModelFactory()

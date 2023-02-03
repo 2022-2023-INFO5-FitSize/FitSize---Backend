@@ -1,6 +1,6 @@
 from rest_framework.serializers import ModelSerializer
 
-from polls.models import ClothingType, Company, CompanyModel, Size, User, UserModel
+from polls.models import ClothingType, Company, CompanyModel, Size, User, UserModel, CompanyRepresentative
 
 
 class UserSerializer(ModelSerializer):
@@ -54,3 +54,13 @@ class CompanyModelSerializer(ModelSerializer):
         self.fields['size'] = SizeSerializer(read_only=True)
         self.fields['clothingtype'] = ClothingTypeSerializer(read_only=True)
         return super(CompanyModelSerializer, self).to_representation(instance)
+    
+class CompanyRepresentativeSerializer(ModelSerializer):
+    class Meta:
+        model = CompanyRepresentative
+        fields = ('id', 'login', 'password', 'company')
+        
+    def to_representation(self, instance):
+        self.fields['company'] = CompanySerializer(read_only=True)
+        return super(CompanyRepresentativeSerializer, self).to_representation(instance)
+

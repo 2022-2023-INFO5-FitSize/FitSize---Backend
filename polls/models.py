@@ -28,7 +28,6 @@ class Company(models.Model):
     def __str__(self):
         return self.name
 
-
 class CompanyModel(models.Model):
     color = models.CharField(max_length=100, blank=True)
     dimensions = models.CharField(max_length=1000, blank=True)
@@ -41,6 +40,15 @@ class CompanyModel(models.Model):
 
     def __str__(self):
         return self.color
+
+class CompanyRepresentative(models.Model):
+    login = models.CharField(max_length=100, blank=True)
+    
+    password = models.CharField(max_length=200, blank=True)
+    company = models.ForeignKey(Company, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.login + ": " + str(self.company)
 
 
 class Size(models.Model):

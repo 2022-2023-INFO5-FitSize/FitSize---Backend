@@ -1,6 +1,6 @@
 import factory
 import uuid
-from polls.models import ClothingType, Company, User, UserModel, CompanyModel, Size
+from polls.models import ClothingType, Company, User, UserModel, CompanyModel, Size, CompanyRepresentative
 from django.db import models
 
 
@@ -37,6 +37,15 @@ class CompanyFactory(factory.Factory):
     class Meta:
         model = Company
 
+
+class CompanyRepresentativeFactory(factory.Factory):
+    login = factory.Faker('name')
+    password = factory.Faker('password')
+    company = factory.SubFactory(CompanyFactory)
+
+    
+    class Meta:
+        model = CompanyRepresentative
 
 class SizeFactory(factory.Factory):
     label = "XS"
