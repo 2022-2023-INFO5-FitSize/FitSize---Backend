@@ -5,6 +5,7 @@ import ssl
 # logger
 from logging import getLogger
 logger = getLogger(__name__)
+logger.disabled = True
 
 
 def progress_print(block_count, block_size, total_size):

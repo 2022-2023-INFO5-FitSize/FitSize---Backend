@@ -22,6 +22,7 @@ try:
 except ImportError:
     thop = None
 logger = logging.getLogger(__name__)
+logger.disabled = True
 
 
 @contextmanager

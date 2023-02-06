@@ -1,4 +1,5 @@
 import argparse
+import sys
 import time
 from pathlib import Path
 import numpy as np
@@ -215,6 +216,7 @@ def detect(save_img=False):
         # print(f"Results saved to {save_dir}{s}")
 
     print(f'Done. ({time.time() - t0:.3f}s)')
+    return keypoints, cb_box_distance
 
 
 if __name__ == '__main__':
@@ -238,7 +240,17 @@ if __name__ == '__main__':
     parser.add_argument('--exist-ok', action='store_true', help='existing project/name ok, do not increment')
     parser.add_argument('--no-trace', default=True, help='don`t trace model')
     opt = parser.parse_args()
-    print(opt)
+    # print(opt)
 
     with torch.no_grad():
-        detect()
+        # Execute the detect() function without all the standard outputs
+        save_stdout = sys.stdout
+        sys.stdout = open('trash', 'w')
+        keypoints, cb_box_distance = detect()
+        # Restore stdout
+        sys.stdout = save_stdout
+        # Put results on stdout
+        print(keypoints)
+        print(cb_box_distance)
+        # with open('run_result.txt', 'w') as res_file:
+        #     res_file.write(str(keypoints)+'\n'+str(cb_box_distance))

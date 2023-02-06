@@ -15,8 +15,8 @@ EXPERIMENT_NAME = "experiment"
 
 CLOTHING_TYPE = 'trousers'
 CHECKBOARD_SIZE = (5, 5)
-SAVE_IMAGE = True
-SAVE_TXT = True
+SAVE_IMAGE = False
+SAVE_TXT = False
 VISUALIZE = False
 
 BENCHMARK = False

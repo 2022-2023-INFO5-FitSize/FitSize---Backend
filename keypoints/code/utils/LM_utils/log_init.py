@@ -36,7 +36,7 @@ else:
 
 
 logger = getLogger()
-
+logger.disabled = True
 # remove duplicate handlers
 if (logger.hasHandlers()):
     logger.handlers.clear()
