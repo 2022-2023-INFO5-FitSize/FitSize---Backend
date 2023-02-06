@@ -154,5 +154,8 @@ cython_debug/
 #VS Code 
 .vs/
 
+# MacOS
+.DS_Store
+
 # FitSize
 runs/
