@@ -7,12 +7,16 @@ from django.http import JsonResponse
 
 
 def exec_script(request):
+    # TODO: take base64 in the request, save tmp img and give its path to the script
     wd = os.getcwd() + '/keypoints/code'
-    ai_exec = subprocess.Popen(['python3.9', 'run_no_det.py'],
+    ai_exec = subprocess.Popen(['python', 'run_no_det.py',
+                                '--clothing', 'trousers'],
                                stdout=subprocess.PIPE,
                                stderr=subprocess.STDOUT,
                                cwd=wd)
     res = ai_exec.communicate()[0]
+    print(res)
+    # os.remove(os.getcwd() + '/keypoints/code/tmp.jpg')
 
     # Extract keypoints and checkerboard size
     split_res = res.split(b'\n')
@@ -23,7 +27,7 @@ def exec_script(request):
             split_res[3].decode("utf-8").replace("'", '"')
         )
     )
-    cb_box_distance = split_res[4].decode("utf-8")
+    cb_box_distance = float(split_res[4].decode("utf-8"))
 
     return JsonResponse({
         'keypoints': keypoints,

@@ -140,7 +140,7 @@ def update_parser(parser, check_input_type=True, large_model=False):
     args : ArgumentParser()
         (parse_args() will be done here)
     """
-    args = parser.parse_args()
+    args, unknown = parser.parse_known_args()
 
     # -------------------------------------------------------------------------
     # 0. logger level update

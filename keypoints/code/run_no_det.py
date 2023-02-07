@@ -17,7 +17,7 @@ from utils.torch_utils import select_device, TracedModel
 
 # import original modules
 from utils.LM_utils.fashionai_key_points_detection_utils import draw_keypoints
-from utils.LM_utils.utils import get_base_parser, update_parser # noqa: E402
+from utils.LM_utils.utils import get_base_parser, update_parser  # noqa: E402
 from utils.LM_utils.model_utils import check_and_download_models  # noqa: E402
 # from utils.webcamera_utils import get_capture  # noqa: E402
 
@@ -26,11 +26,11 @@ from utils.helper import preprocess_landmark_img, post_processing_landmarks, get
 from CONFIG import *
 
 # logger
-from logging import getLogger   # noqa: E402
+from logging import getLogger  # noqa: E402
 logger = getLogger(__name__)
 
 # ======================
-# Arguemnt Parser Config
+# Argument Parser Config
 # ======================
 parser = get_base_parser('FashionAI model')
 args = update_parser(parser)
@@ -39,24 +39,25 @@ args = update_parser(parser)
 def detect(save_img=False):
     opt.save_txt = True
     source, weights, view_img, save_txt, imgsz, trace = opt.source, opt.weights, opt.view_img, opt.save_txt, opt.img_size, not opt.no_trace
+    clothing_type = opt.clothing
     print("DBG001000:::")
     print(opt.conf_thres)
     print(opt.iou_thres)
-    #pprint(classes=opt.classes)
-    #print(agnostic=opt.agnostic_nms)
+    # pprint(classes=opt.classes)
+    # print(agnostic=opt.agnostic_nms)
 
-    #return
+    # return
 
     save_img = not opt.nosave and not source.endswith('.txt')  # save inference images
     print("DBG002000:::")
     webcam = source.isnumeric() or source.endswith('.txt') or source.lower().startswith(('rtsp://', 'rtmp://', 'http://', 'https://'))
     print("DBG003000:::")
-    
+
     # Directories
     save_dir = Path(increment_path(Path(opt.project) / opt.name, exist_ok=opt.exist_ok))  # increment run
     (save_dir / 'labels' if save_txt else save_dir).mkdir(parents=True, exist_ok=True)  # make dir
     print("DBG004000:::")
-    #exit(1)
+    # exit(1)
     # Initialize
     set_logging()
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu') #select_device(opt.device)
@@ -80,7 +81,7 @@ def detect(save_img=False):
         print("DBG10000:::")
 
     # initialize Landmarks Detection Models
-    weight_path, model_path = MODELS[CLOTHING_TYPE]['weights_path'], MODELS[CLOTHING_TYPE]['model_path']
+    weight_path, model_path = MODELS[clothing_type]['weights_path'], MODELS[clothing_type]['model_path']
     print("DBG11000:::")
     check_and_download_models(weight_path, model_path, REMOTE_PATH_LANDMARKS)
     print("DBG12000:::")
@@ -107,7 +108,7 @@ def detect(save_img=False):
     if device.type != 'cpu':
         model(torch.zeros(1, 3, imgsz, imgsz).to(device).type_as(next(model.parameters())))  # run once
     t0 = time.time()
-    
+
     for path, img, im0s, vid_cap in tqdm(dataset, total=len(dataset)):
         print("DBG17000:::")
         img = torch.from_numpy(img).to(device)
@@ -174,11 +175,11 @@ def detect(save_img=False):
                 print("DBG270000:::")
                 hm_pred, hm_pred2 = hm_pred[0], hm_pred2[0]
                 print("DBG280000:::")
-                keypoints = post_processing_landmarks(hm_pred, hm_pred2, info, CLOTHING_TYPE)
+                keypoints = post_processing_landmarks(hm_pred, hm_pred2, info, clothing_type)
                 print("DBG290000:::")
 
                 # plot result
-                im0 = draw_keypoints(im0, keypoints, CLOTHING_TYPE)
+                im0 = draw_keypoints(im0, keypoints, clothing_type)
                 print("DBG300000:::")
 
         # Stream results
@@ -211,12 +212,25 @@ def detect(save_img=False):
             kps.write(str(keypoints))
             kps.write('\n')
             kps.write(str(cb_box_distance))
-        
+
         s = f"\n{len(list(save_dir.glob('labels/*.txt')))} labels saved to {save_dir / 'labels'}" if save_txt else ''
         # print(f"Results saved to {save_dir}{s}")
 
     print(f'Done. ({time.time() - t0:.3f}s)')
     return keypoints, cb_box_distance
+
+
+def main():
+    with torch.no_grad():
+        # Execute the detect() function without all the standard outputs
+        save_stdout = sys.stdout
+        sys.stdout = open('trash', 'w')
+        keypoints, cb_box_distance = detect()
+        # Restore stdout
+        sys.stdout = save_stdout
+        # Put results on stdout
+        print(keypoints)
+        print(cb_box_distance)
 
 
 if __name__ == '__main__':
@@ -239,18 +253,7 @@ if __name__ == '__main__':
     parser.add_argument('--name', default='detections', help='save results to project/name')
     parser.add_argument('--exist-ok', action='store_true', help='existing project/name ok, do not increment')
     parser.add_argument('--no-trace', default=True, help='don`t trace model')
+    parser.add_argument('--clothing', type=str, default=CLOTHING_TYPE, help='the type of cloth to analyze')
     opt = parser.parse_args()
     # print(opt)
-
-    with torch.no_grad():
-        # Execute the detect() function without all the standard outputs
-        save_stdout = sys.stdout
-        sys.stdout = open('trash', 'w')
-        keypoints, cb_box_distance = detect()
-        # Restore stdout
-        sys.stdout = save_stdout
-        # Put results on stdout
-        print(keypoints)
-        print(cb_box_distance)
-        # with open('run_result.txt', 'w') as res_file:
-        #     res_file.write(str(keypoints)+'\n'+str(cb_box_distance))
+    main()
