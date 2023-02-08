@@ -5,10 +5,10 @@ import re
 import subprocess
 
 from django.http import JsonResponse
-# from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_exempt
 
 
-# @csrf_exempt
+@csrf_exempt
 def exec_script(request):
     res = {}
     if request.method == 'POST':
@@ -31,6 +31,7 @@ def exec_script(request):
         os.remove(os.getcwd() + '/keypoints/code/tmp.jpg')
 
         # Extract keypoints and checkerboard size
+        print(res)
         split_res = res.split(b'\n')
         keypoints = json.loads(
             re.sub(
