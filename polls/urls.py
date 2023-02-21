@@ -11,7 +11,7 @@ router.register(r'company', CompanyViewSet)
 router.register(r'companymodel', CompanyModelViewSet)
 router.register(r'size', SizeViewSet)
 router.register(r'clothingtype', ClothingTypeViewSet)
-router.register(r'comp', CompanyRepresentativeViewSet)
+router.register(r'companyrepresentative', CompanyRepresentativeViewSet)
 
 urlpatterns = [
     re_path('^', include(router.urls)),
