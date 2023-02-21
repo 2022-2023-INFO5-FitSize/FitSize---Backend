@@ -147,5 +147,14 @@
             "password": "xinchao",
             "company": 3
         }
+    },
+    {
+        "model": "polls.companyrepresentative",
+        "pk": 2,
+        "fields": {
+            "login": "croninis",
+            "password": "ptisamo",
+            "company": 1
+        }
     }
 ]
