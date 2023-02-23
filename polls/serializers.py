@@ -37,8 +37,7 @@ class SizeSerializer(ModelSerializer):
     class Meta:
         model = Size
         fields = ('id', 'label', 'origin')
-
-
+    
 class CompanyModelSerializer(ModelSerializer):
     # size = SizeSerializer(read_only=True)
     # company = CompanySerializer(read_only=True)
