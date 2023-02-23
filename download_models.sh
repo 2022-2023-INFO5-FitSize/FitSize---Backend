@@ -7,10 +7,21 @@ url="https://drive.google.com/uc?id=1-OFnoDgnYrkxiB6icgmaOpFQS1TAunfs&export=dow
 models_dir="./keypoints/code/models/models"
 weights_dir="./keypoints/code/weights"
 
-# Check if the models and weights directories already contain content
-if [ "$(ls -A $models_dir)" ] || [ "$(ls -A $weights_dir)" ]; then
-  echo "Models and/or weights files already exist. Skipping download."
+# Check if the target directories already contain content
+if [ -n "$(ls -A $models_dir 2>/dev/null)" ] && [ -n "$(ls -A $weights_dir 2>/dev/null)" ]; then
+  echo "The target directories already contain content. Exiting."
   exit 0
+fi
+
+# Create target directories if they don't exist
+if [ ! -d $models_dir ]; then
+  echo "Creating $models_dir directory..."
+  mkdir -p $models_dir
+fi
+
+if [ ! -d $weights_dir ]; then
+  echo "Creating $weights_dir directory..."
+  mkdir -p $weights_dir
 fi
 
 # Download the file using gdown
@@ -23,8 +34,8 @@ unzip -q tmp.zip -d tmp
 
 # Copy the files to the target directories
 echo "Copying files to target directories..."
-cp -r tmp/* $models_dir
-cp -r tmp/* $weights_dir
+cp -r tmp/modelsFitSize.nosync/* $models_dir
+cp -r tmp/modelsFitSize.nosync/* $weights_dir
 
 # Clean up temporary files
 echo "Cleaning up..."
