@@ -1,6 +1,17 @@
 from django.db import models
 
 
+class Image(models.Model):
+    image = models.BinaryField()
+
+class Model(models.Model):
+    dimensions = models.TextField(blank=True)
+    images = models.ForeignKey('Image', on_delete=models.CASCADE, blank=True, null=True)
+    clothingtype = models.ForeignKey('ClothingType', on_delete=models.CASCADE, blank=True, null=True)
+
+    class Meta:
+        abstract = True
+
 class User(models.Model):
     login = models.CharField(max_length=100, blank=True)
     password = models.CharField(max_length=200, blank=True)
@@ -8,18 +19,13 @@ class User(models.Model):
     def __str__(self):
         return self.login
 
-class UserModel(models.Model):
+
+class UserModel(Model):
     name = models.CharField(max_length=100, blank=True)
-    dimensions = models.TextField(blank=True)
-    
-    user = models.ForeignKey(
-        'User', on_delete=models.CASCADE, blank=True, null=True)
-    clothingtype = models.ForeignKey(
-        'ClothingType', on_delete=models.CASCADE, blank=True, null=True)
+    user = models.ForeignKey('User', on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
         return self.name
-
 
 class Company(models.Model):
     name = models.CharField(max_length=100, blank=True)
@@ -28,16 +34,11 @@ class Company(models.Model):
     def __str__(self):
         return self.name
 
-class CompanyModel(models.Model):
+class CompanyModel(Model):
     color = models.CharField(max_length=100, blank=True)
-    dimensions = models.TextField(blank=True)
-    company = models.ForeignKey(
-        'Company', on_delete=models.CASCADE, blank=True, null=True)
-    size = models.ForeignKey(
-        'Size', on_delete=models.CASCADE, blank=True, null=True)
-    clothingtype = models.ForeignKey(
-        'ClothingType', on_delete=models.CASCADE, blank=True, null=True)
-
+    company = models.ForeignKey('Company', on_delete=models.CASCADE, blank=True, null=True)
+    size = models.ForeignKey('Size', on_delete=models.CASCADE, blank=True, null=True)
+    
     def __str__(self):
         return self.color
 
