@@ -2,12 +2,12 @@
 
 ## Requirements
 
-- [Git LFS](https://git-lfs.com/) to clone AI weights and models from this repo. After cloning this repo, run the following command:
-  ```bash
-  $ git lfs pull
-  ```
 - Python>=[3.9.0](https://www.python.org/)
 - PyTorch>=[1.7](https://pytorch.org/get-started/locally/) is required. For gpu version pytorch, installing from there offficial repository is recommended.
+- gdown to download model files from Google Drive :
+```bash
+  $ pip3 install gdown
+```
 
 ```bash
 # extract the code from the provided zip file.
@@ -28,6 +28,18 @@ $ cd python
 $ python bootstrap.py
 $ pip install .
 ```
+
+## Download model files
+
+If it is the first time you open this repo, you've probably not downloaded the model files yet.
+To do so, run the following command:
+
+```bash
+$ chmod +x download_models.sh
+$ ./download_models.sh
+```
+
+It will copy the files in appropriate directories.
 
 ## Start the server
 
