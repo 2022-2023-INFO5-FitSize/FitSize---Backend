@@ -3,6 +3,7 @@ import json
 import os
 import re
 import subprocess
+import uuid
 
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -17,21 +18,23 @@ def exec_script(request):
         img_data = body_json['image'] # base64 raw data (without prefix data:image/...)
         wd = os.getcwd() + '/keypoints/code'
 
-        with open(wd + '/tmp.jpg', 'wb') as f:
+        # Generate unique uuid
+        img_id = uuid.uuid4()
+
+        with open(wd + '/tmp'+str(img_id)+'.jpg', 'wb') as f:
             f.write(base64.b64decode(img_data)) # Valid only for jpg data
             f.close()
 
         ai_exec = subprocess.Popen(['python', 'run_no_det.py',
                                     '--clothing', clothing,
-                                    '--source', wd + '/tmp.jpg'],
+                                    '--source', wd + '/tmp'+str(img_id)+'.jpg'],
                                    stdout=subprocess.PIPE,
                                    stderr=subprocess.STDOUT,
                                    cwd=wd)
         res = ai_exec.communicate()[0]
-        os.remove(os.getcwd() + '/keypoints/code/tmp.jpg')
+        os.remove(os.getcwd() + '/keypoints/code/tmp'+str(img_id)+'.jpg')
 
         # Extract keypoints and checkerboard size
-        print(res)
         split_res = res.split(b'\n')
         keypoints = json.loads(
             re.sub(
