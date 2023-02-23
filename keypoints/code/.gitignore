@@ -1,3 +1,5 @@
 runs/
 data/
 trash
+weights/
+models/models/
