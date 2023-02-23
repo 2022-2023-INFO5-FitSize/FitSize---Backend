@@ -28,7 +28,7 @@
         "pk": 1,
         "fields": {
             "name": "TShirt Rouge",
-            "dimensions": "1.0,0.1,4.0,2.5,4.0KP0.0,0.5,8.0,7.0,6.0,5.5,1.2,7.8,8.8,0.0,9.4,8.0",
+            "dimensions": "{'neckline': 5.2, 'center_front': 10.3, 'shoulder': 5.8, 'armpit': 10.3, 'cuff_left': 9.4, 'cuff_right': 9.4, 'top_hem':5.2}",
             "user": 3,
             "clothingtype": 1
         }
@@ -38,7 +38,7 @@
         "pk": 2,
         "fields": {
             "name": "Pantalon Noir",
-            "dimensions": "8.0,0.1,9.0,6.5,4.0KP0.0,0.5,3.0,7.0,6.0,55.5,1.2,7.8,8.8,0.0,9.4,8.0,10.0,11.0",
+            "dimensions": "{'neckline': 5.2, 'center_front': 10.3, 'shoulder': 5.8, 'armpit': 10.3, 'cuff_left': 9.4, 'cuff_right': 9.4, 'top_hem':5.2}",
             "user": 2,
             "clothingtype": 2
         }
@@ -48,7 +48,7 @@
         "pk": 3,
         "fields": {
             "name": "Robe Blanche",
-            "dimensions": "8.0,0.1,9.0,6.5,4.0KP0.0,0.5,3.0,7.0,6.0,55.5,1.2,7.8,8.8,0.0,9.4,8.0,10.0,11.0",
+            "dimensions": "{'neckline': 5.2, 'center_front': 10.3, 'shoulder': 5.8, 'armpit': 10.3, 'cuff_left': 9.4, 'cuff_right': 9.4, 'top_hem':5.2}",
             "user": 1,
             "clothingtype": 3
         }
@@ -82,7 +82,7 @@
         "pk": 1,
         "fields": {
             "color": "Bleu",
-            "dimensions": "200 0 0 0 10",
+            "dimensions": "{}",
             "company": 3,
             "size": 1,
             "clothingtype": 3
@@ -93,7 +93,7 @@
         "pk": 2,
         "fields": {
             "color": "Orange",
-            "dimensions": "8 0 0 40 10",
+            "dimensions": "{}",
             "company": 2,
             "size": 2,
             "clothingtype": 1

@@ -8,10 +8,10 @@ class User(models.Model):
     def __str__(self):
         return self.login
 
-
 class UserModel(models.Model):
     name = models.CharField(max_length=100, blank=True)
-    dimensions = models.CharField(max_length=100, blank=True)
+    dimensions = models.TextField(blank=True)
+    
     user = models.ForeignKey(
         'User', on_delete=models.CASCADE, blank=True, null=True)
     clothingtype = models.ForeignKey(
@@ -30,7 +30,7 @@ class Company(models.Model):
 
 class CompanyModel(models.Model):
     color = models.CharField(max_length=100, blank=True)
-    dimensions = models.CharField(max_length=1000, blank=True)
+    dimensions = models.TextField(blank=True)
     company = models.ForeignKey(
         'Company', on_delete=models.CASCADE, blank=True, null=True)
     size = models.ForeignKey(
