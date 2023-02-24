@@ -5,9 +5,16 @@ import re
 import subprocess
 import uuid
 
+from celery import Celery
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
+
+app = Celery('tasks', broker='pyamqp://guest@localhost//')
+
+@app.task
+def add(x, y):
+    return x + y
 
 @csrf_exempt
 def exec_script(request):
