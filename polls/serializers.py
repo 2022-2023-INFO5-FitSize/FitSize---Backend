@@ -1,7 +1,23 @@
 from rest_framework.serializers import ModelSerializer
 
-from polls.models import ClothingType, Company, CompanyModel, Size, User, UserModel, CompanyRepresentative
+from polls.models import ClothingType, Image, Company, CompanyModel, Model, Size, User, UserModel, CompanyRepresentative
 
+class ImageSerializer(ModelSerializer):
+    class Meta:
+        model = Image
+        fields = ('id', 'image')
+
+class ModelSerial(ModelSerializer):
+    images = ImageSerializer(many=True)
+
+    class Meta:
+        model = Model        
+        fields = ('id', 'dimensions', 'clotingtype', 'images')
+        
+    def to_representation(self, instance):
+        self.fields['clothingtype'] = ClothingTypeSerializer(read_only=True)
+    
+        return super(ModelSerial, self).to_representation(instance)
 
 class UserSerializer(ModelSerializer):
     class Meta:
@@ -16,11 +32,12 @@ class ClothingTypeSerializer(ModelSerializer):
 
 
 class UserModelSerializer(ModelSerializer):
-
+    images = ImageSerializer(many=True)
+    
     class Meta:
         model = UserModel
-        fields = ('id', 'name', 'dimensions', 'user', 'clothingtype')
-
+        fields = '__all__'
+        
     def to_representation(self, instance):
         self.fields['user'] = UserSerializer(read_only=True)
         self.fields['clothingtype'] = ClothingTypeSerializer(read_only=True)
@@ -42,6 +59,8 @@ class CompanyModelSerializer(ModelSerializer):
     # size = SizeSerializer(read_only=True)
     # company = CompanySerializer(read_only=True)
     # clothingtype = ClothingTypeSerializer(read_only=True)
+    company = CompanySerializer(read_only=True)
+    images = ImageSerializer(read_only=True, many=True)
 
     class Meta:
         model = CompanyModel

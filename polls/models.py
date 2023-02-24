@@ -1,16 +1,16 @@
 from django.db import models
 
-
-class Image(models.Model):
-    image = models.BinaryField()
-
 class Model(models.Model):
     dimensions = models.TextField(blank=True)
-    images = models.ForeignKey('Image', on_delete=models.CASCADE, blank=True, null=True)
     clothingtype = models.ForeignKey('ClothingType', on_delete=models.CASCADE, blank=True, null=True)
+    
+    images = models.ManyToManyField('Image', blank=True)
 
     class Meta:
         abstract = True
+
+class Image(models.Model):
+    image = models.BinaryField()
 
 class User(models.Model):
     login = models.CharField(max_length=100, blank=True)
