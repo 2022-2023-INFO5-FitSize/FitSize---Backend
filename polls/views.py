@@ -7,6 +7,7 @@ from polls.models import ClothingType, Company, CompanyModel, Size, User, UserMo
 from polls.serializers import ClothingTypeSerializer, CompanyModelSerializer, CompanySerializer, SizeSerializer, UserModelSerializer, UserSerializer, CompanyRepresentativeSerializer
 from rest_framework.response import Response
 from rest_framework import status
+from django.shortcuts import get_object_or_404
 
 def index(request):
     return HttpResponse("Hello, world. You're at the polls index.")
@@ -14,10 +15,27 @@ def index(request):
 class UserViewSet(ModelViewSet):
       serializer_class = UserSerializer
       queryset = User.objects.all()
+      
+      @action(detail=False, methods=['GET'], url_path='login/(?P<login>\w+)')
+      def get_by_login(self, request, pk=None, login=None):
+            try:
+                  user = User.objects.get(login=login)
+                  serializer = UserSerializer(user)
+                  return Response(serializer.data)
+            except User.DoesNotExist:
+                  return Response(status=status.HTTP_404_NOT_FOUND)
 
 class UserModelViewSet(ModelViewSet):
       serializer_class = UserModelSerializer
       queryset = UserModel.objects.all()
+
+      @action(detail=False, methods=['GET'], url_path='login/(?P<login>\w+)')
+      def get_by_login(self, request, pk=None, login=None):
+            user = get_object_or_404(User, login=login)
+            usermodels = self.queryset.filter(user=user)
+            serializer = self.get_serializer(usermodels, many=True)
+            return Response(serializer.data)
+
 
       @action(methods=['post'], detail=False, url_path='savedimensions',url_name="Save dimensions")
       def saveFromKeyPoints(self, request, *args, **kwargs) :
