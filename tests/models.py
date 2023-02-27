@@ -37,6 +37,7 @@ class UserModelFactory(factory.Factory):
     class Meta:
         model = UserModel
 
+    id = factory.Sequence(lambda n: n)
     name = factory.Faker('name')
     user = factory.SubFactory(UserFactory)
 
@@ -86,6 +87,7 @@ class SizeFactory(factory.Factory):
 
 
 class CompanyModelFactory(factory.Factory):
+    id = factory.Sequence(lambda n: n)
     color = factory.Faker('color')
     company = factory.SubFactory(CompanyFactory)
     size = factory.SubFactory(SizeFactory)
