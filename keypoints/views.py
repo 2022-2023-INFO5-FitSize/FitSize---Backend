@@ -1,20 +1,13 @@
 import base64
 import json
 import os
-import re
-import subprocess
 import uuid
 
-from celery import Celery
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
+from .tasks import process_image
 
-app = Celery('tasks', broker='pyamqp://guest@localhost//')
-
-@app.task
-def add(x, y):
-    return x + y
 
 @csrf_exempt
 def exec_script(request):
@@ -32,28 +25,12 @@ def exec_script(request):
             f.write(base64.b64decode(img_data)) # Valid only for jpg data
             f.close()
 
-        ai_exec = subprocess.Popen(['python', 'run_no_det.py',
-                                    '--clothing', clothing,
-                                    '--source', wd + '/tmp'+str(img_id)+'.jpg'],
-                                   stdout=subprocess.PIPE,
-                                   stderr=subprocess.STDOUT,
-                                   cwd=wd)
-        res = ai_exec.communicate()[0]
-        os.remove(os.getcwd() + '/keypoints/code/tmp'+str(img_id)+'.jpg')
+        # Run AI script
+        res = process_image.delay('/tmp'+str(img_id)+'.jpg', clothing)
 
-        # Extract keypoints and checkerboard size
-        split_res = res.split(b'\n')
-        keypoints = json.loads(
-            re.sub(
-                r"array\([^)]*\)",
-                lambda s: '"' + s.group(0) + '"',
-                split_res[3].decode("utf-8").replace("'", '"')
-            )
-        )
-        cb_box_distance = float(split_res[4].decode("utf-8"))
-        res = {
-            'keypoints': keypoints,
-            'cb_box_distance': cb_box_distance,
-        }
+    return JsonResponse({'task_id': res.id})
 
-    return JsonResponse(res)
+def task_status(request, task_id):
+    res = process_image.AsyncResult(task_id)
+    print(res.result)
+    return JsonResponse({'status': res.status, 'result': res.result})
