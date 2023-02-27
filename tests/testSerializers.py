@@ -18,13 +18,37 @@ class UserSerializer(TestCase):
 
 class UserModelSerializer(TestCase):
     def test_model_fields(self):
-        usermodel = models.UserModelFactory()
+        
+        """
+        user = models.UserFactory.create()
+        clothing_type = models.ClothingTypeFactory.create()
+        images = models.ImageFactory.create()
+
+        user.save()
+        clothing_type.save()
+        images.save()
+        """
+        usermodel = models.UserModelFactory.create()
+        usermodel.clothingtype.save()
+        usermodel.user.save()
+        
+        image1 = models.ImageFactory.create()
+        image2 = models.ImageFactory.create()
+        image1.save()
+        image2.save()
+        
+        usermodel.save()
+        usermodel.images.add(image1, image2)
+        usermodel.save()
+
         serializer = serializers.UserModelSerializer(usermodel)
+        
         for field_name in ['id', 'name', 'dimensions']:
             self.assertEqual(
                 serializer.data[field_name],
                 getattr(usermodel, field_name)
             )
+        
         # Equivalence with user field
         for field_name in ['id', 'login', 'password']:
             self.assertEqual(
@@ -37,7 +61,16 @@ class UserModelSerializer(TestCase):
                 serializer.data['clothingtype'][field_name],
                 getattr(usermodel.clothingtype, field_name)
             )
+            
+        print("1", str(usermodel.images.values()[0]['image']))
+        print("2", serializer.data["images"][0]['image'])
 
+        for i, image in enumerate(serializer.data['images']):
+            for field_name in ['id', 'image']:     
+                self.assertEqual(
+                    image[field_name],
+                    getattr(usermodel.images.all()[i], field_name)
+                )
 
 class CompanySerializer(TestCase):
     def test_model_fields(self):
@@ -99,6 +132,22 @@ class CompanyModelSerializer(TestCase):
                 serializer.data['clothingtype'][field_name],
                 getattr(companymodel.clothingtype, field_name)
             )
+
+        for i, image in enumerate(serializer.data['images']):
+            for field_name in ['id', 'image']:
+                """print("=======================================")
+                print(str(i) + "\t" + field_name)
+                print("=======================================")
+
+                print(serializer.data['images'][i][field_name])
+                print("---------------------------------------")
+                print(usermodel.images.values()[i][field_name])
+                """
+                self.assertEqual(
+                    image[field_name].encode('utf-8'),
+                    getattr(companymodel.images.all()[i].encode('utf-8'), field_name)
+                )
+
 
 
 class SizeSerializer(TestCase):

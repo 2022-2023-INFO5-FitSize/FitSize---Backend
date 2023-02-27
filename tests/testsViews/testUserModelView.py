@@ -22,12 +22,15 @@ class UserModelViewSetTestCase(TestCase):
 
         usermodel1.user.save()
         usermodel1.clothingtype.save()
-
+        usermodel1.images.save()
+        
         usermodel2.user.save()
         usermodel2.clothingtype.save()
+        usermodel2.images.save()
 
         usermodel3.user.save()
         usermodel3.clothingtype.save()
+        usermodel3.images.save()
 
         usermodel1.save()
         usermodel2.save()
