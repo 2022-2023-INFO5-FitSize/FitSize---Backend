@@ -32,5 +32,4 @@ def exec_script(request):
 
 def task_status(request, task_id):
     res = process_image.AsyncResult(task_id)
-    print(res.result)
     return JsonResponse({'status': res.status, 'result': res.result})

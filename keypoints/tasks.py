@@ -17,21 +17,26 @@ def process_image(image_path, clothing):
     res = ai_exec.communicate()[0]
     os.remove(os.getcwd() + '/keypoints/code/' + image_path)
 
-    print(res)
     # Extract keypoints and checkerboard size
     split_res = res.split(b'\n')
-    keypoints = json.loads(
-        re.sub(
-            r"array\([^)]*\)",
-            lambda s: '"' + s.group(0) + '"',
-            split_res[3].decode("utf-8").replace("'", '"')
+    try:
+        keypoints = json.loads(
+            re.sub(
+                r"array\([^)]*\)",
+                lambda s: '"' + s.group(0) + '"',
+                split_res[-3].decode("utf-8").replace("'", '"')
+            )
         )
-    )
-    cb_box_distance = float(split_res[4].decode("utf-8"))
-    res = {
-        'keypoints': keypoints,
-        'cb_box_distance': cb_box_distance,
-    }
+        cb_box_distance = float(split_res[-2].decode("utf-8"))
+        res = {
+            'keypoints': keypoints,
+            'cb_box_distance': cb_box_distance,
+        }
+    except:
+        res = {
+            'keypoints': None,
+            'cb_box_distance': None,
+        }
 
     return res
 
