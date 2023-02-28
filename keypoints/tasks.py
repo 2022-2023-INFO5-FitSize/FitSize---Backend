@@ -5,6 +5,7 @@ import subprocess
 
 from fitsize.celery import app
 
+
 @app.task
 def process_image(image_path, clothing):
     wd = os.getcwd() + '/keypoints/code'
@@ -39,4 +40,3 @@ def process_image(image_path, clothing):
         }
 
     return res
-
