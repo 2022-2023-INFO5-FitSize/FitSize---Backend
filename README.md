@@ -45,7 +45,7 @@ $ docker run -d -p 5672:5672 rabbitmq
 
 ```bash
 $ python manage.py migrate
-$ python manage.py runserver
+$ daphne fitsize.asgi:application 
 ```
 
 In a separate terminal, start the celery worker:
