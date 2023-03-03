@@ -11,6 +11,9 @@ class Model(models.Model):
 
 class Image(models.Model):
     image = models.BinaryField()
+    
+    def __str__(self):
+        return str(self.image)
 
 class User(models.Model):
     login = models.CharField(max_length=100, blank=True)

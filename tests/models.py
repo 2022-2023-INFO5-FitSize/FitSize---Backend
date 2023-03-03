@@ -5,18 +5,16 @@ import uuid
 from polls.models import Image, ClothingType, Company, Model, User, UserModel, CompanyModel, Size, CompanyRepresentative
 from django.db import models
 import random
-
-
-fake = Faker()
+import secrets
 
 class ImageFactory(factory.Factory):
-    #image = factory.Faker('binary')
     class Meta:
         model = Image
 
-    image = fake.binary(length=64)
-    #image = Faker('binary', length=1024)  # generate a binary file of length 1024
-
+    # generate random image
+    # using this way to have a different image
+    # each time ImageFactory is called
+    image = factory.LazyAttribute(lambda obj: secrets.token_bytes(64))
 
 class UserFactory(factory.Factory):
     login = factory.Faker('name')
@@ -50,16 +48,16 @@ class UserModelFactory(factory.Factory):
     #images = factory.SubFactory(ImageFactory, 'image')
     
     @factory.post_generation
-    def images(self, create, extracted, **kwargs):
-        print("AAAAAAAAA")
+    def images_gen(self, create, extracted, **kwargs):
         if not create:
             # Simple build, do nothing.
             return
 
-        if extracted:
-            # A list of groups were passed in, use them
-            for image in extracted:
-                self.images.add(image)
+        # we will generate 2 images for each UserModel
+        for i in range(0, 3):
+            image = ImageFactory()
+            image.save()
+            self.images.add(image)
 
 class CompanyFactory(factory.Factory):
     name = factory.Faker('company')
