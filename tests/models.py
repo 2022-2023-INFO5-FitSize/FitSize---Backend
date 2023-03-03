@@ -1,8 +1,20 @@
 import factory
+import factory.fuzzy
+from faker import Faker
 import uuid
-from polls.models import ClothingType, Company, User, UserModel, CompanyModel, Size, CompanyRepresentative
+from polls.models import Image, ClothingType, Company, Model, User, UserModel, CompanyModel, Size, CompanyRepresentative
 from django.db import models
+import random
+import secrets
 
+class ImageFactory(factory.Factory):
+    class Meta:
+        model = Image
+
+    # generate random image
+    # using this way to have a different image
+    # each time ImageFactory is called
+    image = factory.LazyAttribute(lambda obj: secrets.token_bytes(64))
 
 class UserFactory(factory.Factory):
     login = factory.Faker('name')
@@ -19,16 +31,33 @@ class ClothingTypeFactory(factory.Factory):
     class Meta:
         model = ClothingType
 
-
 class UserModelFactory(factory.Factory):
-    name = factory.Faker('name')
-    dimensions = "1.0,0.1,4.0,2.5,4.0KP0.0,0.5,8.0,7.0,6.0,5.5,1.2,7.8,8.8,0.0,9.4,8.0"
-    user = factory.SubFactory(UserFactory)
-    clothingtype = factory.SubFactory(ClothingTypeFactory)
-
     class Meta:
         model = UserModel
 
+    id = factory.Sequence(lambda n: n)
+    name = factory.Faker('name')
+    user = factory.SubFactory(UserFactory)
+
+
+    dimensions = "{'neckline': 5.2, 'center_front': 10.3, 'shoulder': 5.8, 'armpit': 10.3, 'cuff_left': 9.4}"
+    clothingtype = factory.SubFactory(ClothingTypeFactory)
+    
+    # Define the RelatedFactory for Image objects
+    #images = factory.SubFactory(ImageFactory, size=3)
+    #images = factory.SubFactory(ImageFactory, 'image')
+    
+    @factory.post_generation
+    def images_gen(self, create, extracted, **kwargs):
+        if not create:
+            # Simple build, do nothing.
+            return
+
+        # we will generate 2 images for each UserModel
+        for i in range(0, 3):
+            image = ImageFactory()
+            image.save()
+            self.images.add(image)
 
 class CompanyFactory(factory.Factory):
     name = factory.Faker('company')
@@ -56,11 +85,17 @@ class SizeFactory(factory.Factory):
 
 
 class CompanyModelFactory(factory.Factory):
+    id = factory.Sequence(lambda n: n)
     color = factory.Faker('color')
-    dimensions = "200 10 100"
     company = factory.SubFactory(CompanyFactory)
     size = factory.SubFactory(SizeFactory)
+    
+    dimensions = "{'neckline': 5.2, 'center_front': 10.3, 'shoulder': 5.8, 'armpit': 10.3, 'cuff_left': 9.4}"
     clothingtype = factory.SubFactory(ClothingTypeFactory)
 
+    # Define the RelatedFactory for Image objects
+    images = factory.RelatedFactoryList(ImageFactory, size=lambda: random.randint(1, 5))
+
+    
     class Meta:
         model = CompanyModel

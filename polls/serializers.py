@@ -1,7 +1,23 @@
 from rest_framework.serializers import ModelSerializer
 
-from polls.models import ClothingType, Company, CompanyModel, Size, User, UserModel, CompanyRepresentative
+from polls.models import ClothingType, Image, Company, CompanyModel, Model, Size, User, UserModel, CompanyRepresentative
 
+class ImageSerializer(ModelSerializer):
+    class Meta:
+        model = Image
+        fields = ('id', 'image')
+
+class ModelSerial(ModelSerializer):
+    images = ImageSerializer(many=True)
+
+    class Meta:
+        model = Model        
+        fields = ('id', 'dimensions', 'clotingtype', 'images')
+        
+    def to_representation(self, instance):
+        self.fields['clothingtype'] = ClothingTypeSerializer(read_only=True)
+    
+        return super(ModelSerial, self).to_representation(instance)
 
 class UserSerializer(ModelSerializer):
     class Meta:
@@ -16,14 +32,15 @@ class ClothingTypeSerializer(ModelSerializer):
 
 
 class UserModelSerializer(ModelSerializer):
-
+    
     class Meta:
         model = UserModel
-        fields = ('id', 'name', 'dimensions', 'user', 'clothingtype')
-
+        fields = ('id', 'name', 'user', 'dimensions', 'clothingtype', 'images')
+        
     def to_representation(self, instance):
         self.fields['user'] = UserSerializer(read_only=True)
         self.fields['clothingtype'] = ClothingTypeSerializer(read_only=True)
+        self.fields['images'] =  ImageSerializer(read_only=True, many=True)
         return super(UserModelSerializer, self).to_representation(instance)
 
 
@@ -39,19 +56,17 @@ class SizeSerializer(ModelSerializer):
         fields = ('id', 'label', 'origin')
     
 class CompanyModelSerializer(ModelSerializer):
-    # size = SizeSerializer(read_only=True)
-    # company = CompanySerializer(read_only=True)
-    # clothingtype = ClothingTypeSerializer(read_only=True)
 
     class Meta:
         model = CompanyModel
-        fields = ('id', 'color', 'dimensions',
-                  'company', 'size', 'clothingtype')
+        fields = ('id', 'color', 'dimensions', 'company', 'size', 'clothingtype', 'images')
 
     def to_representation(self, instance):
         self.fields['company'] = CompanySerializer(read_only=True)
         self.fields['size'] = SizeSerializer(read_only=True)
         self.fields['clothingtype'] = ClothingTypeSerializer(read_only=True)
+        self.fields['images'] =  ImageSerializer(read_only=True, many=True)
+
         return super(CompanyModelSerializer, self).to_representation(instance)
     
 class CompanyRepresentativeSerializer(ModelSerializer):
