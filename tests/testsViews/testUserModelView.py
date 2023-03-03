@@ -60,6 +60,8 @@ class UserModelViewSetTestCase(TestCase):
         
         for i in range(0, usermodel1.images.count() - 1):
             self.assertFields(['id','image'], usermodel1.images.all()[i], usermodel1_data.images.all()[i])
+
+        for i in range(0, usermodel2.images.count() - 1):
             self.assertFields(['id','image'], usermodel2.images.all()[i], usermodel2_data.images.all()[i])
         
         
@@ -152,8 +154,6 @@ class UserModelViewSetTestCase(TestCase):
 
         user.save()
         clothingtype.save()
-
-        
 
         data_usermodel = {
             'name': 'New name',
