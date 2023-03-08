@@ -153,7 +153,6 @@ CONNECTIONS = {
         "waistband": ('waistband_left', 'waistband_right'),
         "left_leg": ('waistband_left', 'bottom_left_out'),
         "right_leg": ('waistband_right', 'bottom_right_out'),
-        "crotch": ('waistband_left', 'crotch', 'waistband_right'),
     },
     'skirt': {
         "waistband": ('waistband_left', 'waistband_right'),
