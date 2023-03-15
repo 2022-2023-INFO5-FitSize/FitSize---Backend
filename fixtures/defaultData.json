@@ -31,7 +31,7 @@
             "user": 1,
             "dimensions": "{'neckline': 5.2, 'center_front': 10.3, 'cuff_left': 9.4}",
             "clothingtype": 3,
-            "image": "images/blouse1.jpg"
+            "image": "blouse1.jpg"
         }
     },  
     {
@@ -42,7 +42,7 @@
             "user": 2,
             "dimensions": "{'neckline': 5.2, 'center_front': 10.3, 'shoulder': 5.8, 'armpit': 10.3, 'cuff_left': 9.4}",
             "clothingtype": 3,
-            "image": "images/blouse4.jpg"
+            "image": "blouse4.jpg"
 
         }
     },
@@ -54,7 +54,7 @@
             "user": 1,
             "dimensions": "{'neckline': 5.2, 'center_front': 10.3, 'shoulder': 5.8, 'armpit': 10.3, 'cuff_left': 9.4, 'cuff_right': 9.4, 'top_hem':5.2}",
             "clothingtype": 1,
-            "image": "images/dress1.jpg"
+            "image": "dress1.jpg"
         }
     },
     {
@@ -91,7 +91,7 @@
 
             "dimensions": "{'neckline': 5.2, 'center_front': 10.3, 'shoulder': 5.8, 'armpit': 10.3, 'cuff_left': 9.4, 'cuff_right': 9.4, 'top_hem':5.2}",
             "clothingtype": 1,
-            "image": "images/outwear2.jpg"
+            "image": "outwear2.jpg"
         }
     },
     {
@@ -104,7 +104,7 @@
 
             "size": 2,
             "clothingtype": 1,
-            "image": "images/dress1.jpg"
+            "image": "dress1.jpg"
         }
     },
     {
