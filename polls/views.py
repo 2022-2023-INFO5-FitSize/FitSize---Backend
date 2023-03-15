@@ -74,7 +74,6 @@ class CompanyModelViewSet(ModelViewSet):
       serializer_class = CompanyModelSerializer
       queryset = CompanyModel.objects.all()
 
-
 class SizeViewSet(ModelViewSet):
       serializer_class = SizeSerializer
       queryset = Size.objects.all()
