@@ -1,5 +1,5 @@
 from rest_framework.serializers import ModelSerializer
-
+import base64
 from polls.models import ClothingType, Company, CompanyModel, Model, Size, User, UserModel, CompanyRepresentative
 
 class ModelSerial(ModelSerializer):
@@ -43,6 +43,7 @@ class UserModelSerializer(ModelSerializer):
         # Convert image to base64
         instance.image = base64_content
 
+
         return super(UserModelSerializer, self).to_representation(instance)
 
 
@@ -51,14 +52,11 @@ class CompanySerializer(ModelSerializer):
         model = Company
         fields = ('id', 'name', 'adress')
 
-
 class SizeSerializer(ModelSerializer):
     class Meta:
         model = Size
         fields = ('id', 'label', 'origin')
         
-import base64
-
 class CompanyModelSerializer(ModelSerializer):
 
     class Meta:
