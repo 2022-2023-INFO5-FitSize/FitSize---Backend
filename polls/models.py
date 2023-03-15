@@ -4,16 +4,10 @@ class Model(models.Model):
     dimensions = models.TextField(blank=True)
     clothingtype = models.ForeignKey('ClothingType', on_delete=models.CASCADE, blank=True, null=True)
     
-    images = models.ManyToManyField('Image', blank=True)
+    image = models.ImageField(blank=True, upload_to="")
 
     class Meta:
         abstract = True
-
-class Image(models.Model):
-    image = models.BinaryField()
-    
-    def __str__(self):
-        return str(self.image)
 
 class User(models.Model):
     login = models.CharField(max_length=100, blank=True)
@@ -43,7 +37,7 @@ class CompanyModel(Model):
     size = models.ForeignKey('Size', on_delete=models.CASCADE, blank=True, null=True)
     
     def __str__(self):
-        return self.color
+        return "color: " + self.color + "image: " + str(self.image)
 
 class CompanyRepresentative(models.Model):
     login = models.CharField(max_length=100, blank=True)

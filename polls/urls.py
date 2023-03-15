@@ -1,6 +1,6 @@
 from django.urls import include, re_path
 from rest_framework import routers
-from polls.views import ImageViewSet, UserViewSet, UserModelViewSet, CompanyViewSet, CompanyModelViewSet, SizeViewSet, ClothingTypeViewSet, CompanyRepresentativeViewSet
+from polls.views import UserViewSet, UserModelViewSet, CompanyViewSet, CompanyModelViewSet, SizeViewSet, ClothingTypeViewSet, CompanyRepresentativeViewSet
 from django.urls import path
 from . import views
 
@@ -12,7 +12,6 @@ router.register(r'companymodel', CompanyModelViewSet)
 router.register(r'size', SizeViewSet)
 router.register(r'clothingtype', ClothingTypeViewSet)
 router.register(r'companyrepresentative', CompanyRepresentativeViewSet)
-router.register(r'image', ImageViewSet)
 
 urlpatterns = [
     re_path('^', include(router.urls)),
