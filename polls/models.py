@@ -4,7 +4,7 @@ class Model(models.Model):
     dimensions = models.TextField(blank=True)
     clothingtype = models.ForeignKey('ClothingType', on_delete=models.CASCADE, blank=True, null=True)
     
-    image = models.ImageField(blank=True, upload_to="")
+    image = models.TextField(blank=True)
 
     class Meta:
         abstract = True
