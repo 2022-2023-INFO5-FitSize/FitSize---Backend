@@ -3,8 +3,8 @@ from math import sqrt
 from rest_framework.decorators import action
 from django.http import HttpResponse
 from rest_framework.viewsets import ModelViewSet
-from polls.models import ClothingType, Company, Image, CompanyModel, Size, User, UserModel, CompanyRepresentative
-from polls.serializers import ClothingTypeSerializer, CompanyModelSerializer, CompanySerializer, ImageSerializer, SizeSerializer, UserModelSerializer, UserSerializer, CompanyRepresentativeSerializer
+from polls.models import ClothingType, Company, CompanyModel, Size, User, UserModel, CompanyRepresentative
+from polls.serializers import ClothingTypeSerializer, CompanyModelSerializer, CompanySerializer, SizeSerializer, UserModelSerializer, UserSerializer, CompanyRepresentativeSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from django.shortcuts import get_object_or_404
@@ -88,7 +88,3 @@ class ClothingTypeViewSet(ModelViewSet):
 class CompanyRepresentativeViewSet(ModelViewSet):
       serializer_class = CompanyRepresentativeSerializer
       queryset = CompanyRepresentative.objects.all()
-      
-class ImageViewSet(ModelViewSet):
-      serializer_class = ImageSerializer
-      queryset = Image.objects.all()

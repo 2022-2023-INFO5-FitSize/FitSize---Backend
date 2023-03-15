@@ -69,8 +69,11 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'fitsize.wsgi.application'
+import os
 
+WSGI_APPLICATION = 'fitsize.wsgi.application'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'images')
+MEDIA_URL = '/images/'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
